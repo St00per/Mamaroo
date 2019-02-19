@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0E4D1180221BE614005B95C0 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D117F221BE613005B95C0 /* Inter-Bold.otf */; };
+		0E4D1182221BE971005B95C0 /* DetectingProcess.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D1181221BE971005B95C0 /* DetectingProcess.storyboard */; };
+		0E4D1184221BEC3B005B95C0 /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D1183221BEC3B005B95C0 /* Inter-Regular.otf */; };
 		0E8C76B422167C8C005C0922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C76B322167C8C005C0922 /* AppDelegate.swift */; };
 		0E8C76B622167C8C005C0922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C76B522167C8C005C0922 /* ViewController.swift */; };
 		0E8C76B922167C8C005C0922 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C76B722167C8C005C0922 /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 
 /* Begin PBXFileReference section */
 		0E4D117F221BE613005B95C0 /* Inter-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.otf"; sourceTree = "<group>"; };
+		0E4D1181221BE971005B95C0 /* DetectingProcess.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetectingProcess.storyboard; sourceTree = "<group>"; };
+		0E4D1183221BEC3B005B95C0 /* Inter-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.otf"; sourceTree = "<group>"; };
 		0E8C76B022167C8C005C0922 /* mamaroo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mamaroo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E8C76B322167C8C005C0922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E8C76B522167C8C005C0922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,6 +44,7 @@
 		0E4D117E221BE5E5005B95C0 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				0E4D1183221BEC3B005B95C0 /* Inter-Regular.otf */,
 				0E4D117F221BE613005B95C0 /* Inter-Bold.otf */,
 			);
 			path = Fonts;
@@ -67,6 +72,7 @@
 			children = (
 				0E8C76B522167C8C005C0922 /* ViewController.swift */,
 				0E8C76B722167C8C005C0922 /* Main.storyboard */,
+				0E4D1181221BE971005B95C0 /* DetectingProcess.storyboard */,
 				0E8C76B322167C8C005C0922 /* AppDelegate.swift */,
 				0E8C76BA22167C98005C0922 /* Assets.xcassets */,
 				0E8C76BC22167C98005C0922 /* LaunchScreen.storyboard */,
@@ -134,8 +140,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E8C76BE22167C98005C0922 /* LaunchScreen.storyboard in Resources */,
+				0E4D1184221BEC3B005B95C0 /* Inter-Regular.otf in Resources */,
 				0E4D1180221BE614005B95C0 /* Inter-Bold.otf in Resources */,
 				0E8C76BB22167C98005C0922 /* Assets.xcassets in Resources */,
+				0E4D1182221BE971005B95C0 /* DetectingProcess.storyboard in Resources */,
 				0E8C76B922167C8C005C0922 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

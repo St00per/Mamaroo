@@ -37,6 +37,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Bold.otf</string>
+		<string>Inter-Regular.otf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
