@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E4D1180221BE614005B95C0 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D117F221BE613005B95C0 /* Inter-Bold.otf */; };
 		0E8C76B422167C8C005C0922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C76B322167C8C005C0922 /* AppDelegate.swift */; };
 		0E8C76B622167C8C005C0922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C76B522167C8C005C0922 /* ViewController.swift */; };
 		0E8C76B922167C8C005C0922 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C76B722167C8C005C0922 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E4D117F221BE613005B95C0 /* Inter-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.otf"; sourceTree = "<group>"; };
 		0E8C76B022167C8C005C0922 /* mamaroo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mamaroo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E8C76B322167C8C005C0922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E8C76B522167C8C005C0922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,9 +37,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E4D117E221BE5E5005B95C0 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0E4D117F221BE613005B95C0 /* Inter-Bold.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		0E8C76A722167C8C005C0922 = {
 			isa = PBXGroup;
 			children = (
+				0E4D117E221BE5E5005B95C0 /* Fonts */,
 				0E8C76B222167C8C005C0922 /* mamaroo */,
 				0E8C76B122167C8C005C0922 /* Products */,
 			);
@@ -54,9 +65,9 @@
 		0E8C76B222167C8C005C0922 /* mamaroo */ = {
 			isa = PBXGroup;
 			children = (
-				0E8C76B322167C8C005C0922 /* AppDelegate.swift */,
 				0E8C76B522167C8C005C0922 /* ViewController.swift */,
 				0E8C76B722167C8C005C0922 /* Main.storyboard */,
+				0E8C76B322167C8C005C0922 /* AppDelegate.swift */,
 				0E8C76BA22167C98005C0922 /* Assets.xcassets */,
 				0E8C76BC22167C98005C0922 /* LaunchScreen.storyboard */,
 				0E8C76BF22167C98005C0922 /* Info.plist */,
@@ -123,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E8C76BE22167C98005C0922 /* LaunchScreen.storyboard in Resources */,
+				0E4D1180221BE614005B95C0 /* Inter-Bold.otf in Resources */,
 				0E8C76BB22167C98005C0922 /* Assets.xcassets in Resources */,
 				0E8C76B922167C8C005C0922 /* Main.storyboard in Resources */,
 			);
@@ -285,6 +297,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A4283R63P3;
 				INFOPLIST_FILE = mamaroo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +316,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A4283R63P3;
 				INFOPLIST_FILE = mamaroo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
