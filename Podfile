@@ -6,5 +6,5 @@ target 'mamaroo' do
   use_frameworks!
 
   # Pods for mamaroo
-
+  pod 'NVActivityIndicatorView'
 end

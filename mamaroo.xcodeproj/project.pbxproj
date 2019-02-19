@@ -10,17 +10,20 @@
 		0E4D1180221BE614005B95C0 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D117F221BE613005B95C0 /* Inter-Bold.otf */; };
 		0E4D1182221BE971005B95C0 /* DetectingProcess.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D1181221BE971005B95C0 /* DetectingProcess.storyboard */; };
 		0E4D1184221BEC3B005B95C0 /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D1183221BEC3B005B95C0 /* Inter-Regular.otf */; };
+		0E4D1186221BF003005B95C0 /* PatternDetected.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4D1185221BF003005B95C0 /* PatternDetected.storyboard */; };
 		0E8C76B422167C8C005C0922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C76B322167C8C005C0922 /* AppDelegate.swift */; };
 		0E8C76B622167C8C005C0922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C76B522167C8C005C0922 /* ViewController.swift */; };
 		0E8C76B922167C8C005C0922 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C76B722167C8C005C0922 /* Main.storyboard */; };
 		0E8C76BB22167C98005C0922 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C76BA22167C98005C0922 /* Assets.xcassets */; };
 		0E8C76BE22167C98005C0922 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C76BC22167C98005C0922 /* LaunchScreen.storyboard */; };
+		6A8551901EF499D506786687 /* Pods_mamaroo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F62692498D9442521427B2E6 /* Pods_mamaroo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0E4D117F221BE613005B95C0 /* Inter-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.otf"; sourceTree = "<group>"; };
 		0E4D1181221BE971005B95C0 /* DetectingProcess.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetectingProcess.storyboard; sourceTree = "<group>"; };
 		0E4D1183221BEC3B005B95C0 /* Inter-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.otf"; sourceTree = "<group>"; };
+		0E4D1185221BF003005B95C0 /* PatternDetected.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PatternDetected.storyboard; sourceTree = "<group>"; };
 		0E8C76B022167C8C005C0922 /* mamaroo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mamaroo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E8C76B322167C8C005C0922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E8C76B522167C8C005C0922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +31,9 @@
 		0E8C76BA22167C98005C0922 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E8C76BD22167C98005C0922 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E8C76BF22167C98005C0922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60E24C31CD4E1C9CADBDBBDB /* Pods-mamaroo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mamaroo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mamaroo/Pods-mamaroo.debug.xcconfig"; sourceTree = "<group>"; };
+		EB0C9D1092DD838E58B71CAC /* Pods-mamaroo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mamaroo.release.xcconfig"; path = "Pods/Target Support Files/Pods-mamaroo/Pods-mamaroo.release.xcconfig"; sourceTree = "<group>"; };
+		F62692498D9442521427B2E6 /* Pods_mamaroo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mamaroo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A8551901EF499D506786687 /* Pods_mamaroo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +63,8 @@
 				0E4D117E221BE5E5005B95C0 /* Fonts */,
 				0E8C76B222167C8C005C0922 /* mamaroo */,
 				0E8C76B122167C8C005C0922 /* Products */,
+				ADE5A793ACA96899EE76C7CD /* Pods */,
+				BF48CBE979CBA81727644B88 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,12 +82,30 @@
 				0E8C76B522167C8C005C0922 /* ViewController.swift */,
 				0E8C76B722167C8C005C0922 /* Main.storyboard */,
 				0E4D1181221BE971005B95C0 /* DetectingProcess.storyboard */,
+				0E4D1185221BF003005B95C0 /* PatternDetected.storyboard */,
 				0E8C76B322167C8C005C0922 /* AppDelegate.swift */,
 				0E8C76BA22167C98005C0922 /* Assets.xcassets */,
 				0E8C76BC22167C98005C0922 /* LaunchScreen.storyboard */,
 				0E8C76BF22167C98005C0922 /* Info.plist */,
 			);
 			path = mamaroo;
+			sourceTree = "<group>";
+		};
+		ADE5A793ACA96899EE76C7CD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				60E24C31CD4E1C9CADBDBBDB /* Pods-mamaroo.debug.xcconfig */,
+				EB0C9D1092DD838E58B71CAC /* Pods-mamaroo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BF48CBE979CBA81727644B88 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F62692498D9442521427B2E6 /* Pods_mamaroo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,9 +115,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0E8C76C222167C98005C0922 /* Build configuration list for PBXNativeTarget "mamaroo" */;
 			buildPhases = (
+				EE2F80A17837CDFED5150C49 /* [CP] Check Pods Manifest.lock */,
 				0E8C76AC22167C8C005C0922 /* Sources */,
 				0E8C76AD22167C8C005C0922 /* Frameworks */,
 				0E8C76AE22167C8C005C0922 /* Resources */,
+				6FBAD005C455FB91A6CCD884 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -141,6 +170,7 @@
 			files = (
 				0E8C76BE22167C98005C0922 /* LaunchScreen.storyboard in Resources */,
 				0E4D1184221BEC3B005B95C0 /* Inter-Regular.otf in Resources */,
+				0E4D1186221BF003005B95C0 /* PatternDetected.storyboard in Resources */,
 				0E4D1180221BE614005B95C0 /* Inter-Bold.otf in Resources */,
 				0E8C76BB22167C98005C0922 /* Assets.xcassets in Resources */,
 				0E4D1182221BE971005B95C0 /* DetectingProcess.storyboard in Resources */,
@@ -149,6 +179,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6FBAD005C455FB91A6CCD884 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-mamaroo/Pods-mamaroo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mamaroo/Pods-mamaroo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE2F80A17837CDFED5150C49 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-mamaroo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0E8C76AC22167C8C005C0922 /* Sources */ = {
@@ -300,6 +377,7 @@
 		};
 		0E8C76C322167C98005C0922 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60E24C31CD4E1C9CADBDBBDB /* Pods-mamaroo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -319,6 +397,7 @@
 		};
 		0E8C76C422167C98005C0922 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB0C9D1092DD838E58B71CAC /* Pods-mamaroo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
