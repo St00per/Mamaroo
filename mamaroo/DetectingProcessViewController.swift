@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 
 class DetectingProcessViewController: UIViewController {
     
+    var motion = CMMotionManager()
     
     @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
     
@@ -24,16 +25,26 @@ class DetectingProcessViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         activityIndicator.startAnimating()
+        myDeviceMotion()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func myDeviceMotion() {
+        print("Start DeviceMotion")
+        motion.deviceMotionUpdateInterval  = 0.01
+        motion.startDeviceMotionUpdates(to: OperationQueue.current!) {
+            (data, error) in
+            //print(data as Any)
+            if let trueData =  data {
+                
+                self.view.reloadInputViews()
+                //self.xDevi!.text = String(format: "x (pitch): %.2f", trueData.attitude.pitch)
+                
+                //self.yDevi!.text = String(format: "y (pitch): %.2f", trueData.attitude.roll)
+                //self.zDevi!.text = String(format: "z (pitch): %.2f", trueData.attitude.yaw)
+                print("\(String(format: "%.2f", trueData.attitude.roll)),\(String(format: "%.2f", trueData.attitude.yaw)),\(String(format: "%.2f", trueData.attitude.pitch))")
+            }
+        }
+        return
     }
-    */
-
+    
 }
