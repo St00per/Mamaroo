@@ -18,10 +18,18 @@ class DetectingProcessViewController: UIViewController {
     let deviceMotion = CMDeviceMotion()
     let motionFrameReference: CMAttitudeReferenceFrame = CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical
     let kLowPassFilteringFactor: Double = 0.1
-    let noiseReduction: Double = 0.05
+    let noiseReduction: Double = 0.02
     var previousLowPassFilteredAccelerationX: Double = 0
     var previousLowPassFilteredAccelerationY: Double = 0
     var previousLowPassFilteredAccelerationZ: Double = 0
+    
+    var previousVelocityX: Double = 0
+    var previousVelocityY: Double = 0
+    var previousVelocityZ: Double = 0
+    
+    var previousDistanceX: Double = 0
+    var previousDistanceY: Double = 0
+    var previousDistanceZ: Double = 0
     
     var points: [(Double,Double)] = []
     
@@ -72,39 +80,42 @@ class DetectingProcessViewController: UIViewController {
     func myDeviceMotion() {
         print("Start DeviceMotion")
         motion.deviceMotionUpdateInterval  = 1/100
-        //motion.deviceMotion?.attitude.
-        //deviceMotion.userAcceleration.
-        //motion.attitudeReferenceFrame
         motion.startDeviceMotionUpdates(using:.xMagneticNorthZVertical, to: OperationQueue.current!) {
             (data, error) in
             
             if let trueData =  data {
                 let userAcceleration = trueData.userAccelerationInReferenceFrame
                 var lowpassFilterAcceleration = CMAcceleration()
+                let time = self.motion.deviceMotionUpdateInterval
                 
+                lowpassFilterAcceleration.x = (userAcceleration().x * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                lowpassFilterAcceleration.y = (userAcceleration().y * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                lowpassFilterAcceleration.z = (userAcceleration().z * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                if (userAcceleration().x > self.noiseReduction || userAcceleration().y > self.noiseReduction || userAcceleration().z > self.noiseReduction) {
+                self.previousLowPassFilteredAccelerationX = lowpassFilterAcceleration.x
+                self.previousLowPassFilteredAccelerationY = lowpassFilterAcceleration.y
+                self.previousLowPassFilteredAccelerationZ = lowpassFilterAcceleration.z
                 
-                lowpassFilterAcceleration.x = (userAcceleration.x * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                lowpassFilterAcceleration.y = (userAcceleration.y * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                lowpassFilterAcceleration.z = (userAcceleration.z * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                print("\(String(format: "%.2f", lowpassFilterAcceleration.y)),\(String(format: "%.2f", lowpassFilterAcceleration.z)),\(String(format: "%.2f", lowpassFilterAcceleration.x))")
-                if (lowpassFilterAcceleration.z > self.noiseReduction || lowpassFilterAcceleration.x > self.noiseReduction) {
-                    self.points.append((lowpassFilterAcceleration.x,lowpassFilterAcceleration.y))
+                    let velocityX = self.previousVelocityX + (userAcceleration().x * time)
+                    let velocityY = self.previousVelocityY + (userAcceleration().y * time)
+                    let velocityZ = self.previousVelocityZ + (userAcceleration().z * time)
+                
+                    let distanceX = self.previousVelocityX * time + ((userAcceleration().x * time * time)/2)
+                    let distanceY = self.previousVelocityY * time + ((userAcceleration().y * time * time)/2)
+                    let distanceZ = self.previousVelocityZ * time + ((userAcceleration().z * time * time)/2)
+                
+                self.previousVelocityX = velocityX
+                self.previousVelocityY = velocityY
+                self.previousVelocityZ = velocityZ
                     
-                    //print("\(String(format: "%.2f", trueData.userAcceleration.x)),\(String(format: "%.2f", trueData.userAcceleration.y)),\(String(format: "%.2f", trueData.userAcceleration.z)),\(String(format: "%.2f", trueData.rotationRate.x)),\(String(format: "%.2f", trueData.rotationRate.y)),\(String(format: "%.2f", trueData.rotationRate.z))")
+                self.previousDistanceX += distanceX
+                self.previousDistanceY += distanceY
+                self.previousDistanceZ += distanceZ
                 
-               
-                    self.previousLowPassFilteredAccelerationX = lowpassFilterAcceleration.x
-                    self.previousLowPassFilteredAccelerationY = lowpassFilterAcceleration.y
-                    self.previousLowPassFilteredAccelerationZ = lowpassFilterAcceleration.z
+                    self.points.append((self.previousDistanceX, self.previousDistanceZ))
+                    
+                    print("\(String(format: "%.2f", self.previousDistanceX)),\(String(format: "%.2f", self.previousDistanceY)),\(String(format: "%.2f", self.previousDistanceZ))")
                 }
-//                //pitch)
-//
-//                //roll)
-//                //yaw)
-                //print("\(String(format: "%.2f", trueData.attitude.roll)),\(String(format: "%.2f", trueData.attitude.yaw)),\(String(format: "%.2f", trueData.attitude.pitch))")
-//                let vectorCalculator = DisplacementVectorCalculator(deviceMotion: self.motion.deviceMotion!)
-//                let vector = vectorCalculator.getDisplacementVector(deviceMotion: self.motion.deviceMotion!, timeInterval: 10)
-//                print("\(String(format: "%.2f", vector.x)),\(String(format: "%.2f", vector.y)),\(String(format: "%.2f", vector.z))")
             }
         }
         return
@@ -123,15 +134,46 @@ class DetectingProcessViewController: UIViewController {
 
 extension CMDeviceMotion {
     
-    var userAccelerationInReferenceFrame: CMAcceleration {
-        let acc = self.userAcceleration
-        let rot = self.attitude.rotationMatrix
+    func userAccelerationInReferenceFrame() -> CMAcceleration {
         
-        var accRef = CMAcceleration()
-        accRef.x = acc.x*rot.m11 + acc.y*rot.m12 + acc.z*rot.m13;
-        accRef.y = acc.x*rot.m21 + acc.y*rot.m22 + acc.z*rot.m23;
-        accRef.z = acc.x*rot.m31 + acc.y*rot.m32 + acc.z*rot.m33;
+        let origin = userAcceleration
+        let rotation = attitude.rotationMatrix
+        let matrix = rotation.inverse()
         
-        return accRef;
+        var result = CMAcceleration()
+        result.x = origin.x * matrix.m11 + origin.y * matrix.m12 + origin.z * matrix.m13;
+        result.y = origin.x * matrix.m21 + origin.y * matrix.m22 + origin.z * matrix.m23;
+        result.z = origin.x * matrix.m31 + origin.y * matrix.m32 + origin.z * matrix.m33;
+        
+        return result
     }
+    
+    func gravityInReferenceFrame() -> CMAcceleration {
+        
+        let origin = self.gravity
+        let rotation = attitude.rotationMatrix
+        let matrix = rotation.inverse()
+        
+        var result = CMAcceleration()
+        result.x = origin.x * matrix.m11 + origin.y * matrix.m12 + origin.z * matrix.m13;
+        result.y = origin.x * matrix.m21 + origin.y * matrix.m22 + origin.z * matrix.m23;
+        result.z = origin.x * matrix.m31 + origin.y * matrix.m32 + origin.z * matrix.m33;
+        
+        return result
+    }
+}
+
+extension CMRotationMatrix {
+    
+    func inverse() -> CMRotationMatrix {
+        
+        let matrix = GLKMatrix3Make(Float(m11), Float(m12), Float(m13), Float(m21), Float(m22), Float(m23), Float(m31), Float(m32), Float(m33))
+        let invert = GLKMatrix3Invert(matrix, nil)
+        
+        return CMRotationMatrix(m11: Double(invert.m00), m12: Double(invert.m01), m13: Double(invert.m02),
+                                m21: Double(invert.m10), m22: Double(invert.m11), m23: Double(invert.m12),
+                                m31: Double(invert.m20), m32: Double(invert.m21), m33: Double(invert.m22))
+        
+    }
+    
 }
