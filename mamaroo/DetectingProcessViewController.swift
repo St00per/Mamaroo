@@ -18,7 +18,7 @@ class DetectingProcessViewController: UIViewController {
     let deviceMotion = CMDeviceMotion()
     let motionFrameReference: CMAttitudeReferenceFrame = CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical
     let kLowPassFilteringFactor: Double = 0.1
-    let noiseReduction: Double = 0
+    let noiseReduction: Double = 0.05
     var previousLowPassFilteredAccelerationX: Double = 0
     var previousLowPassFilteredAccelerationY: Double = 0
     var previousLowPassFilteredAccelerationZ: Double = 0
@@ -29,8 +29,6 @@ class DetectingProcessViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,31 +54,49 @@ class DetectingProcessViewController: UIViewController {
         return
     }
     
-
+    func myGyroscope() {
+        print("Start Gyroscope")
+        motion.gyroUpdateInterval = 0.5
+        motion.startGyroUpdates(to: OperationQueue.current!) {
+            (data, error) in
+            //print(data as Any)
+            if let trueData =  data {
+                
+                
+                print("\(String(format: "%.2f", trueData.rotationRate.x)),\(String(format: "%.2f", trueData.rotationRate.y)),\(String(format: "%.2f", trueData.rotationRate.z))")
+            }
+        }
+        return
+    }
+    
     func myDeviceMotion() {
         print("Start DeviceMotion")
         motion.deviceMotionUpdateInterval  = 1/100
         //motion.deviceMotion?.attitude.
         //deviceMotion.userAcceleration.
         //motion.attitudeReferenceFrame
-        motion.startDeviceMotionUpdates(to: OperationQueue.current!) {
+        motion.startDeviceMotionUpdates(using:.xMagneticNorthZVertical, to: OperationQueue.current!) {
             (data, error) in
             
             if let trueData =  data {
-                let userAcceleration = trueData.attitude
+                let userAcceleration = trueData.userAccelerationInReferenceFrame
                 var lowpassFilterAcceleration = CMAcceleration()
                 
-                lowpassFilterAcceleration.x = (userAcceleration.pitch * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                lowpassFilterAcceleration.y = (userAcceleration.roll * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                lowpassFilterAcceleration.z = (userAcceleration.yaw * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                //if (lowpassFilterAcceleration.x > self.noiseReduction || lowpassFilterAcceleration.y > self.noiseReduction) {
-                    //self.points.append((lowpassFilterAcceleration.x,lowpassFilterAcceleration.y))
-                    print("\(String(format: "%.2f", lowpassFilterAcceleration.x)),\(String(format: "%.2f", lowpassFilterAcceleration.y))")
+                
+                lowpassFilterAcceleration.x = (userAcceleration.x * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                lowpassFilterAcceleration.y = (userAcceleration.y * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                lowpassFilterAcceleration.z = (userAcceleration.z * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                print("\(String(format: "%.2f", lowpassFilterAcceleration.y)),\(String(format: "%.2f", lowpassFilterAcceleration.z)),\(String(format: "%.2f", lowpassFilterAcceleration.x))")
+                if (lowpassFilterAcceleration.z > self.noiseReduction || lowpassFilterAcceleration.x > self.noiseReduction) {
+                    self.points.append((lowpassFilterAcceleration.x,lowpassFilterAcceleration.y))
+                    
+                    //print("\(String(format: "%.2f", trueData.userAcceleration.x)),\(String(format: "%.2f", trueData.userAcceleration.y)),\(String(format: "%.2f", trueData.userAcceleration.z)),\(String(format: "%.2f", trueData.rotationRate.x)),\(String(format: "%.2f", trueData.rotationRate.y)),\(String(format: "%.2f", trueData.rotationRate.z))")
+                
                
                     self.previousLowPassFilteredAccelerationX = lowpassFilterAcceleration.x
                     self.previousLowPassFilteredAccelerationY = lowpassFilterAcceleration.y
                     self.previousLowPassFilteredAccelerationZ = lowpassFilterAcceleration.z
-                //}
+                }
 //                //pitch)
 //
 //                //roll)
@@ -98,4 +114,24 @@ class DetectingProcessViewController: UIViewController {
         
     }
     
+    @IBAction func printPoints(_ sender: UIButton) {
+        for point in self.points {
+            print("\(String(format: "%.2f", point.0)),\(String(format: "%.2f", point.1))")
+        }
+    }
+}
+
+extension CMDeviceMotion {
+    
+    var userAccelerationInReferenceFrame: CMAcceleration {
+        let acc = self.userAcceleration
+        let rot = self.attitude.rotationMatrix
+        
+        var accRef = CMAcceleration()
+        accRef.x = acc.x*rot.m11 + acc.y*rot.m12 + acc.z*rot.m13;
+        accRef.y = acc.x*rot.m21 + acc.y*rot.m22 + acc.z*rot.m23;
+        accRef.z = acc.x*rot.m31 + acc.y*rot.m32 + acc.z*rot.m33;
+        
+        return accRef;
+    }
 }
