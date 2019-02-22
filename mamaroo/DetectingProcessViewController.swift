@@ -18,10 +18,19 @@ class DetectingProcessViewController: UIViewController {
     let deviceMotion = CMDeviceMotion()
     let motionFrameReference: CMAttitudeReferenceFrame = CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical
     let kLowPassFilteringFactor: Double = 0.1
-    let noiseReduction: Double = 0.02
+    let noiseReduction: Double = 0.05
+    
     var previousLowPassFilteredAccelerationX: Double = 0
     var previousLowPassFilteredAccelerationY: Double = 0
     var previousLowPassFilteredAccelerationZ: Double = 0
+    
+    var previousAccelerationX: Double = 0
+    var previousAccelerationY: Double = 0
+    var previousAccelerationZ: Double = 0
+    
+    var resultAccelerationX = 0.0
+    var resultAccelerationY = 0.0
+    var resultAccelerationZ = 0.0
     
     var previousVelocityX: Double = 0
     var previousVelocityY: Double = 0
@@ -32,6 +41,7 @@ class DetectingProcessViewController: UIViewController {
     var previousDistanceZ: Double = 0
     
     var points: [(Double,Double)] = []
+    var currentTime: Double = 0
     
     @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
     
@@ -77,44 +87,52 @@ class DetectingProcessViewController: UIViewController {
         return
     }
     
+    
+    
     func myDeviceMotion() {
         print("Start DeviceMotion")
         motion.deviceMotionUpdateInterval  = 1/100
-        motion.startDeviceMotionUpdates(using:.xMagneticNorthZVertical, to: OperationQueue.current!) {
+        motion.startDeviceMotionUpdates( to: OperationQueue.current!) {
             (data, error) in
             
             if let trueData =  data {
-                let userAcceleration = trueData.userAccelerationInReferenceFrame
+                let userAcceleration = trueData.userAcceleration
                 var lowpassFilterAcceleration = CMAcceleration()
                 let time = self.motion.deviceMotionUpdateInterval
                 
-                lowpassFilterAcceleration.x = (userAcceleration().x * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                lowpassFilterAcceleration.y = (userAcceleration().y * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                lowpassFilterAcceleration.z = (userAcceleration().z * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
-                if (userAcceleration().x > self.noiseReduction || userAcceleration().y > self.noiseReduction || userAcceleration().z > self.noiseReduction) {
+                var pitch0 = degrees(radians: trueData.attitude.pitch)
+                var roll0 = degrees(radians: trueData.attitude.roll)
+                var yaw0 = degrees(radians: trueData.attitude.yaw)
+                
+                    lowpassFilterAcceleration.x = (userAcceleration.x * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                    lowpassFilterAcceleration.y = (userAcceleration.y * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                    lowpassFilterAcceleration.z = (userAcceleration.z * self.kLowPassFilteringFactor) + (self.previousLowPassFilteredAccelerationX * (1.0 - self.kLowPassFilteringFactor))
+                
                 self.previousLowPassFilteredAccelerationX = lowpassFilterAcceleration.x
                 self.previousLowPassFilteredAccelerationY = lowpassFilterAcceleration.y
                 self.previousLowPassFilteredAccelerationZ = lowpassFilterAcceleration.z
                 
-                    let velocityX = self.previousVelocityX + (userAcceleration().x * time)
-                    let velocityY = self.previousVelocityY + (userAcceleration().y * time)
-                    let velocityZ = self.previousVelocityZ + (userAcceleration().z * time)
-                
-                    let distanceX = self.previousVelocityX * time + ((userAcceleration().x * time * time)/2)
-                    let distanceY = self.previousVelocityY * time + ((userAcceleration().y * time * time)/2)
-                    let distanceZ = self.previousVelocityZ * time + ((userAcceleration().z * time * time)/2)
-                
-                self.previousVelocityX = velocityX
-                self.previousVelocityY = velocityY
-                self.previousVelocityZ = velocityZ
+                if (abs(userAcceleration.x) > self.noiseReduction || abs(userAcceleration.y) > self.noiseReduction || abs(userAcceleration.z) > self.noiseReduction) {
                     
-                self.previousDistanceX += distanceX
-                self.previousDistanceY += distanceY
-                self.previousDistanceZ += distanceZ
+//                    self.previousVelocityX += lowpassFilterAcceleration.x
+//                    self.previousVelocityY += lowpassFilterAcceleration.y
+//                    self.previousVelocityZ += lowpassFilterAcceleration.z
                 
-                    self.points.append((self.previousDistanceX, self.previousDistanceZ))
+                    self.previousVelocityX += userAcceleration.x
+                    self.previousVelocityY += userAcceleration.y
+                    self.previousVelocityZ += userAcceleration.z
+                
+                    self.previousDistanceX += self.previousVelocityX
+                    self.previousDistanceY += self.previousVelocityY
+                    self.previousDistanceZ += self.previousVelocityZ
+ 
+                    self.currentTime += time
+                    //self.points.append((trueData.userAcceleration.x, self.currentTime))
                     
-                    print("\(String(format: "%.2f", self.previousDistanceX)),\(String(format: "%.2f", self.previousDistanceY)),\(String(format: "%.2f", self.previousDistanceZ))")
+                print("\(String(format: "%.4f", self.previousDistanceX)),\(String(format: "%.4f", self.previousDistanceY)),\(String(format: "%.4f", self.previousDistanceZ))")
+//                    print("\(String(format: "%.4f", self.currentTime)),\(String(format: "%.4f", trueData.userAcceleration.y))")
+//                    print("\(String(format: "%.4f", self.currentTime)),\(String(format: "%.4f", trueData.userAcceleration.z))")
+                //print("\(String(format: "%.4f", trueData.userAcceleration.x)), \(String(format: "%.4f", trueData.attitude.quaternion.y)), \(String(format: "%.4f", trueData.attitude.quaternion.z)), \(String(format: "%.4f", trueData.attitude.quaternion.w))")
                 }
             }
         }
